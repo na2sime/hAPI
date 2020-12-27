@@ -1,0 +1,4 @@
+name: hAPI
+version: ${full.version}
+main: fr.hikarion.api.API
+author: NA2SIME

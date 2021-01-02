@@ -38,6 +38,7 @@ public class API extends JavaPlugin {
 
         this.loadClasses();
         this.loadListeners();
+        this.loadCommands();
 
     }
 

@@ -29,7 +29,6 @@ public class ModuleCommands {
 
             if (args.getArgs(0).equalsIgnoreCase("list")) {
 
-                sender.sendMessage("§7Liste des modules:");
                 sender.sendMessage("§7Actif: §a" + main.getModuleManager().getActivatedList()
                         .toString().replace("[", " ").replace("]", " "));
                 sender.sendMessage("§7Inactif: §c" + main.getModuleManager().getUnactivatedList()
@@ -48,11 +47,12 @@ public class ModuleCommands {
                 if (args.getArgs(1).equalsIgnoreCase("on")) {
 
                     Module module = main.getModuleManager().getModule(name);
+
                     if (module.isActive()) {
-                        sender.sendMessage("§cLe module est déja activer");
+                        sender.sendMessage("§cLe module §f" + name + " est déja activé");
                     } else {
                         module.setActive(true);
-                        sender.sendMessage("§aVous venez d'activer avec succes le module: §f" + name);
+                        sender.sendMessage("§aVous venez d'activé avec succes le module: §f" + name);
                         for (Player players : Bukkit.getOnlinePlayers()) {
                             if (players.hasPermission("hikarion.module")) {
                                 players.sendMessage("§7§m----------------------------");
@@ -67,9 +67,9 @@ public class ModuleCommands {
                 } else if (args.getArgs(1).equalsIgnoreCase("off")) {
 
                     Module module = main.getModuleManager().getModule(name);
-                    if (!module.isActive()) {
+                    if (module.isActive()) {
                         module.setActive(false);
-                        sender.sendMessage("§aVous venez de désactiver avec succes le module: §f" + name);
+                        sender.sendMessage("§aVous venez de désactivé avec succes le module: §f" + name);
                         for (Player players : Bukkit.getOnlinePlayers()) {
                             if (players.hasPermission("hikarion.module")) {
                                 players.sendMessage("§7§m----------------------------");
@@ -80,7 +80,7 @@ public class ModuleCommands {
                             }
                         }
                     } else {
-                        sender.sendMessage("§cLe module est déja désactiver");
+                        sender.sendMessage("§cLe module §f" + name + " est déja désactivé");
                     }
 
                 } else {

@@ -22,7 +22,7 @@ public class ScoreboardManager {
     }
 
     public void unloadScoreboard(Player player) {
-        this.playersScoreboards.get(player.getUniqueId()).destroy();
+        this.playersScoreboards.remove(player.getUniqueId());
     }
 
     public ScoreboardSign getScoreboard(Player player) {

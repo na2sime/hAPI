@@ -2,7 +2,6 @@ package fr.hikarion.api.manager;
 
 import fr.hikarion.api.API;
 import fr.hikarion.api.models.HikarionPlayer;
-import fr.hikarion.api.utils.ScoreboardSign;
 import org.bukkit.entity.Player;
 
 import java.io.File;
@@ -27,6 +26,8 @@ public class PlayerManager {
             profile = new HikarionPlayer(player);
         }
         this.hikarionPlayers.put(player.getUniqueId(), profile);
+
+        System.out.println(profile.getClass());
     }
 
     public void saveProfile(Player player) {

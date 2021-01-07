@@ -1,6 +1,7 @@
 package fr.hikarion.api;
 
 import fr.hikarion.api.commands.ModuleCommands;
+import fr.hikarion.api.listeners.ArmorListener;
 import fr.hikarion.api.listeners.PlayerJoin;
 import fr.hikarion.api.listeners.PlayerQuit;
 import fr.hikarion.api.manager.ModuleManager;
@@ -38,6 +39,7 @@ public class API extends JavaPlugin {
 
         this.loadClasses();
         this.loadListeners();
+        this.loadEvents();
         this.loadCommands();
 
     }
@@ -57,6 +59,12 @@ public class API extends JavaPlugin {
 
         pluginManager.registerEvents(new PlayerJoin(), this);
         pluginManager.registerEvents(new PlayerQuit(), this);
+    }
+
+    private void loadEvents() {
+        PluginManager pluginManager = Bukkit.getPluginManager();
+
+        pluginManager.registerEvents(new ArmorListener(getConfig().getStringList("blocked")), this);
     }
 
     private void loadCommands() {

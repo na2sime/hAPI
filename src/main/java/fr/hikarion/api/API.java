@@ -34,6 +34,8 @@ public class API extends JavaPlugin {
 
         instance = this;
 
+        saveDefaultConfig();
+
         this.commandFramework = new CommandFramework(this);
         this.commandFramework.registerHelp();
 

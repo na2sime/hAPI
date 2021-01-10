@@ -1,13 +1,11 @@
 package fr.hikarion.api.models;
 
-import fr.hikarion.api.API;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.logging.Level;
 
 public class HikarionPlayer {
 
@@ -40,8 +38,6 @@ public class HikarionPlayer {
         if (!jobs.containsKey(job.getName())
                 && !jobs.containsValue(job)) {
             jobs.put(job.getName(), job);
-        } else {
-            API.getInstance().getLogger().log(Level.INFO, "Can't put data, already exist");
         }
     }
 

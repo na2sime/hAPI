@@ -26,8 +26,6 @@ public class PlayerManager {
             profile = new HikarionPlayer(player);
         }
         this.hikarionPlayers.put(player.getUniqueId(), profile);
-
-        System.out.println(profile.getClass());
     }
 
     public void saveProfile(Player player) {

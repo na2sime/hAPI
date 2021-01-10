@@ -1,13 +1,15 @@
 package fr.hikarion.api.event;
 
 import fr.hikarion.api.list.ArmorType;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.Contract;
 
-public class ArmorEquipEvent extends PlayerEvent implements Cancellable {
+public final class ArmorEquipEvent extends PlayerEvent implements Cancellable {
 
     private static final HandlerList handlers = new HandlerList();
     private boolean cancel = false;
@@ -16,6 +18,8 @@ public class ArmorEquipEvent extends PlayerEvent implements Cancellable {
     private ItemStack oldArmorPiece, newArmorPiece;
 
     /**
+     * Constructor for the ArmorEquipEvent.
+     *
      * @param player        The player who put on / removed the armor.
      * @param type          The ArmorType of the armor added
      * @param oldArmorPiece The ItemStack of the armor removed.
@@ -34,7 +38,8 @@ public class ArmorEquipEvent extends PlayerEvent implements Cancellable {
      *
      * @return A list of handlers handling this event.
      */
-    public static HandlerList getHandlerList() {
+    @Contract(pure = true)
+    public final static HandlerList getHandlerList() {
         return handlers;
     }
 
@@ -43,6 +48,7 @@ public class ArmorEquipEvent extends PlayerEvent implements Cancellable {
      *
      * @return A list of handlers handling this event.
      */
+    @Contract(pure = true)
     @Override
     public final HandlerList getHandlers() {
         return handlers;
@@ -62,17 +68,20 @@ public class ArmorEquipEvent extends PlayerEvent implements Cancellable {
      *
      * @return If this event is cancelled
      */
+    @Contract(pure = true)
     public final boolean isCancelled() {
         return cancel;
     }
 
+    @Contract(pure = true)
     public final ArmorType getType() {
         return type;
     }
 
     /**
-     * Returns the last equipped armor piece, could be a piece of armor, or null
+     * Returns the last equipped armor piece, could be a piece of armor, Air, or null.
      */
+    @Contract(pure = true)
     public final ItemStack getOldArmorPiece() {
         return oldArmorPiece;
     }
@@ -82,8 +91,9 @@ public class ArmorEquipEvent extends PlayerEvent implements Cancellable {
     }
 
     /**
-     * Returns the newly equipped armor, could be a piece of armor, or null
+     * Returns the newly equipped armor, could be a piece of armor, MaterialAir, or null.
      */
+    @Contract(pure = true)
     public final ItemStack getNewArmorPiece() {
         return newArmorPiece;
     }
@@ -95,11 +105,12 @@ public class ArmorEquipEvent extends PlayerEvent implements Cancellable {
     /**
      * Gets the method used to either equip or unequip an armor piece.
      */
+    @Contract(pure = true)
     public EquipMethod getMethod() {
         return equipType;
     }
 
-    public enum EquipMethod {// These have got to be the worst documentations ever.
+    public enum EquipMethod {
         /**
          * When you shift click an armor piece to equip or unequip
          */
@@ -109,10 +120,6 @@ public class ArmorEquipEvent extends PlayerEvent implements Cancellable {
          */
         DRAG,
         /**
-         * When you manually equip or unequip the item. Use to be DRAG
-         */
-        PICK_DROP,
-        /**
          * When you right click an armor piece in the hotbar without the inventory open to equip.
          */
         HOTBAR,
@@ -121,12 +128,11 @@ public class ArmorEquipEvent extends PlayerEvent implements Cancellable {
          */
         HOTBAR_SWAP,
         /**
-         * When in range of a dispenser that shoots an armor piece to equip.<br>
-         * Requires the spigot version to have {@link org.bukkit.event.block.BlockDispenseArmorEvent} implemented.
+         * When in range of a dispenser that shoots an armor piece to equip.
          */
         DISPENSER,
         /**
-         * When an armor piece is removed due to it losing all durability.
+         * When an armor piece breaks to unequip
          */
         BROKE,
         /**
@@ -134,5 +140,29 @@ public class ArmorEquipEvent extends PlayerEvent implements Cancellable {
          */
         DEATH,
         ;
+    }
+
+    public static ItemStack getFromPlayer(ArmorType type, HumanEntity who) {
+        if (type == null || who == null)
+            return null;
+
+        ItemStack item = null;
+
+        switch (type) {
+            case HELMET:
+                item = who.getInventory().getHelmet();
+                break;
+            case CHESTPLATE:
+                item = who.getInventory().getChestplate();
+                break;
+            case LEGGINGS:
+                item = who.getInventory().getLeggings();
+                break;
+            case BOOTS:
+                item = who.getInventory().getBoots();
+                break;
+        }
+
+        return item;
     }
 }
